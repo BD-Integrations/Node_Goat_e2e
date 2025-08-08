@@ -21,7 +21,8 @@
     "serve-favicon": "^2.3.0",
     "swig": "^1.4.2",
     "underscore": "^1.8.3",
-    "lodash": "4.17.11" //Known vulnerability in this version
+    "lodash": "4.17.11",
+    "minimist": "0.0.8"
 
   },
   "comments": {
