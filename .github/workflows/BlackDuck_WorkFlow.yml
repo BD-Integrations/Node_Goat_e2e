@@ -1,4 +1,5 @@
 name: CI-BlackDuck-SCA-Basic
+
 on:
   push:
     branches: [main, master, develop, stage, release]
