@@ -32,9 +32,9 @@ jobs:
         blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
         blackducksca_scan_failure_severities: 'BLOCKER,CRITICAL'
         mark_build_status: 'fail'
-        blackducksca_reports_sarif_create: true
-        blackducksca_upload_sarif_report: true
-        blackducksca_prcomment_enabled: true
+        #blackducksca_reports_sarif_create: true
+        #blackducksca_upload_sarif_report: true
+        #blackducksca_prcomment_enabled: true
         #github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Check Black Duck Scan Exit Code
