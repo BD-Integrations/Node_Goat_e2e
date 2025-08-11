@@ -31,11 +31,9 @@ jobs:
       with:
         blackducksca_url: ${{ vars.BLACKDUCK_URL }}
         blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
+        blackducksca_scan_full: true
         blackducksca_scan_failure_severities: 'BLOCKER,CRITICAL'
-        mark_build_status: 'sucess'
-        detect_config: |
-           bridge.break=false
-
+        mark_build_status: 'success'
 
     - name: Check Black Duck Scan Exit Code
       run: |
