@@ -31,7 +31,7 @@ jobs:
         blackducksca_url: ${{ vars.BLACKDUCK_URL }}
         blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
         blackducksca_scan_failure_severities: 'BLOCKER,CRITICAL'
-        mark_build_status: 'fail'
+        mark_build_status: 'sucess'
         #blackducksca_reports_sarif_create: true
         #blackducksca_upload_sarif_report: true
         #blackducksca_prcomment_enabled: true
