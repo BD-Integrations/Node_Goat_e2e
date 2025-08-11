@@ -33,7 +33,7 @@ jobs:
         blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
         blackducksca_scan_full: true
         blackducksca_scan_failure_severities: 'BLOCKER,CRITICAL'
-        mark_build_status: 'success'
+        mark_build_status: 'fail'
 
     - name: Check Black Duck Scan Exit Code
       run: |
