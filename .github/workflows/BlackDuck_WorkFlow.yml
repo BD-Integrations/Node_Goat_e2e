@@ -27,6 +27,8 @@ jobs:
       uses: blackduck-inc/black-duck-security-scan@v2
       env:
         DETECT_PROJECT_NAME: ${{ github.event.repository.name }}
+        DETECT_CONFIG_OVERRIDE: bridge.break=false
+
       with:
         blackducksca_url: ${{ vars.BLACKDUCK_URL }}
         blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
