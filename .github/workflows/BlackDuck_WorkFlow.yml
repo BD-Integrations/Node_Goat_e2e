@@ -1,20 +1,17 @@
-name: CI-BlackDuck-SCA-Basic
-
+name: CI-BlackDuck-SCA
 on:
   push:
     branches: [main, master, develop, stage, release]
   pull_request:
     branches: [main, master, develop, stage, release]
-  workflow_dispatch:
-
 jobs:
   build:
     runs-on: [sh_mac_mdn]
-    steps:
-    - name: Checkout Source
-      uses: actions/checkout@v4
+  steps:
+  - name: Checkout Source
+    uses: actions/checkout@v4
 
-    - name: Setup Node.js
+ name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
@@ -22,33 +19,48 @@ jobs:
     - name: Install Dependencies
       run: npm install
 
-    - name: Black Duck SCA Full Scan
-      id: black-duck-sca-scan
-      if: github.event_name == 'push'  # Only run this step on push events
-      uses: blackduck-inc/black-duck-security-scan@v2
-      env:
-        DETECT_PROJECT_NAME: ${{ github.event.repository.name }}
-      with:
-        blackducksca_url: ${{ vars.BLACKDUCK_URL }}
-        blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
-        blackducksca_scan_full: true
-        blackducksca_scan_failure_severities: 'BLOCKER,CRITICAL'
-        mark_build_status: 'fail'
+  - name: Black Duck SCA Full Scan
+    id: black-duck-full-scan
+    if: ${{ github.event_name != 'pull_request' }}
+    uses: blackduck-inc/black-duck-security-scan@v2
+    
+    ### Use below configuration to set specific detect environment variables
+    env:
+      DETECT_PROJECT_NAME: ${{ github.event.repository.name }}
+    with:
+      blackducksca_url: ${{ vars.BLACKDUCK_URL }}
+      blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
+      blackducksca_scan_full: true
+     
+      ### Accepts Multiple Values
+      blackducksca_scan_failure_severities: 'BLOCKER,CRITICAL'
+      
+      ### Mark build status if policy violating issues are found
+      mark_build_status: 'failure'
+      
+  - name: Black Duck SCA PR Scan
+    id: black-duck-pr-scan
+    if: ${{ github.event_name == 'pull_request' }}
+    uses: blackduck-inc/black-duck-security-scan@v2
+    
+    ### Use below configuration to set specific detect environment variables
+    env:
+      DETECT_PROJECT_NAME: ${{ github.event.repository.name }}
+    with:
+      blackducksca_url: ${{ vars.BLACKDUCK_URL }}
+      blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
+      blackducksca_scan_full: false
+      
+      ### Below configuration is used to enable automatic pull request comment based on Black Duck SCA scan result
+      blackducksca_prComment_enabled: true
+      github_token: ${{ secrets.BD_GITHUB_TOKEN }}
+   
+      ### Mark build status if policy violating issues are found
+      mark_build_status: 'failure'
 
-    - name: Black Duck SCA PR Scan
-      id: black-duck-sca-pr-scan
-      if: github.event_name == 'pull_request'  # Only run this step on PR events
-      uses: blackduck-inc/black-duck-security-scan@v2
-      env:
-        DETECT_PROJECT_NAME: ${{ github.event.repository.name }}
-      with:
-        blackducksca_url: ${{ vars.BLACKDUCK_URL }}
-        blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
-        blackducksca_scan_full: false  # Set to false for PR comments
-        blackducksca_prcomment_enabled: 'true'  # Enable PR comments
-        blackducksca_scan_failure_severities: 'BLOCKER,CRITICAL'
-        mark_build_status: 'fail'
-
-    - name: Check Black Duck Scan Exit Code
-      run: |
-        echo "Black Duck Scan Exit Code: ${{ steps.black-duck-sca-scan.outputs.status }}"
+       ### Uncomment below configuration to add custom logic based on return status
+        - name: cmdLine
+        id: cmdLine
+         run: |
+         EXIT_CODE=${{ steps.black-duck-full-scan.outputs.status }}
+         echo "Black Duck Full Scan exit status - $EXIT_CODE"  
