@@ -1,46 +1,40 @@
-name: CI-BlackDuck-SCA
-on:
-  push:
-    branches: [main, master, develop, stage, release]
-  pull_request:
-    branches: [main, master, develop, stage, release]
-jobs:
-  build:
-    runs-on: [sh_mac_mdn]
-  steps:
-  - name: Checkout Source
-    uses: actions/checkout@v4
-  - name: Black Duck SCA Full Scan
-    id: black-duck-full-scan
-    if: ${{ github.event_name != 'pull_request' }}
-    uses: blackduck-inc/black-duck-security-scan@v2
-    
-    ### Use below configuration to set specific detect environment variables
-    env:
-      DETECT_PROJECT_NAME: ${{ github.event.repository.name }}
-    with:
-      blackducksca_url: ${{ vars.BLACKDUCK_URL }}
-      blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
-      blackducksca_scan_full: true
+name: CI-BlackDuck-SCA  # Name of the workflow
 
-      ### Accepts Multiple Values
-      blackducksca_scan_failure_severities: 'BLOCKER,CRITICAL'
-      mark_build_status: 'failure'
-      
-        
-  - name: Black Duck SCA PR Scan
-    id: black-duck-pr-scan
-    if: ${{ github.event_name == 'pull_request' }}
-    uses: blackduck-inc/black-duck-security-scan@v2
-    
-    ### Use below configuration to set specific detect environment variables
-    env:
-      DETECT_PROJECT_NAME: ${{ github.event.repository.name }}
-    with:
-      blackducksca_url: ${{ vars.BLACKDUCK_URL }}
-      blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
-      blackducksca_scan_full: false
-      
-      ### Below configuration is used to enable automatic pull request comment based on Black Duck SCA scan result
-      blackducksca_prComment_enabled: true
-      github_token: ${{ secrets.BD_GITHUB_TOKEN }}
+on:
+  push:  # Trigger the workflow on push events
+    branches: [main, master, develop, stage, release]  # Specify branches to trigger on push
+  pull_request:  # Trigger the workflow on pull request events
+    branches: [main, master, develop, stage, release]  # Specify branches to trigger on PR
+
+jobs:
+  build:  # Define a job named 'build'
+    runs-on: [sh_mac_mdn]  # Specify the runner to execute the job
+    steps:  # List of steps to execute in this job
+      - name: Checkout Source  # Step to check out the repository code
+        uses: actions/checkout@v4  # Use the checkout action to clone the repo
+
+      - name: Black Duck SCA Full Scan  # Step for running a full Black Duck scan
+        id: black-duck-full-scan  # Unique ID for this step
+        if: ${{ github.event_name != 'pull_request' }}  # Run this step only if the event is not a PR
+        uses: blackduck-inc/black-duck-security-scan@v2  # Use the Black Duck security scan action
+        env:
+          DETECT_PROJECT_NAME: ${{ github.event.repository.name }}  # Set project name based on repo name
+        with:
+          blackducksca_url: ${{ vars.BLACKDUCK_URL }}  # Black Duck server URL from environment variables
+          blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}  # Black Duck API token from secrets
+          blackducksca_scan_full: true  # Perform a full scan
+          blackducksca_scan_failure_severities: 'BLOCKER,CRITICAL'  # Specify severities for scan failures
+          mark_build_status: 'failure'  # Mark build status as failure if issues are found
+
+      - name: Black Duck SCA PR Scan  # Step for running a scan on pull requests
+        id: black-duck-pr-scan  # Unique ID for this step
+        if: ${{ github.event_name == 'pull_request' }}  # Run this step only for pull request events
+        uses: blackduck-inc/black-duck-security-scan@v2  # Use the Black Duck security scan action
+        env:
+          DETECT_PROJECT_NAME: ${{ github.event.repository.name }}  # Set project name based on repo name
+        with:
+          blackducksca_url: ${{ vars.BLACKDUCK_URL }}  # Black Duck server URL from environment variables
+          blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}  # Black Duck API token from secrets
+          blackducksca_scan_full: false  # Do not perform a full scan for PR comments
+          blackducksca_prComment_enabled: true  # Enable automatic PR comments based on scan results
+          github_token: ${{ secrets.BD_GITHUB_TOKEN }}  # GitHub token for authentication when posting comments
