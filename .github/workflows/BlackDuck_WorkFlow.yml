@@ -13,15 +13,6 @@ jobs:
       - name: Checkout Source  # Step to check out the repository code
         uses: actions/checkout@v4  # Use the checkout action to clone the repo
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'  # Specify the version of Node.js you want to use
-
-      - name: Install Dependencies
-        run: npm install  # Install npm dependencies listed in package.json
-
-
       - name: Black Duck SCA Full Scan  # Step for running a full Black Duck scan
         id: black-duck-full-scan  # Unique ID for this step
         if: ${{ github.event_name != 'pull_request' }}  # Run this step only if the event is not a PR
