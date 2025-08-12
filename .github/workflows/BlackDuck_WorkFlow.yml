@@ -7,7 +7,6 @@ on:
     branches: [main, master, develop, stage, release]
   workflow_dispatch:
 
-
 jobs:
   build:
     runs-on: [sh_mac_mdn]
@@ -23,16 +22,30 @@ jobs:
     - name: Install Dependencies
       run: npm install
 
-    - name: Black Duck SCA Scan
+    - name: Black Duck SCA Full Scan
       id: black-duck-sca-scan
+      if: github.event_name == 'push'  # Only run this step on push events
       uses: blackduck-inc/black-duck-security-scan@v2
       env:
         DETECT_PROJECT_NAME: ${{ github.event.repository.name }}
-
       with:
         blackducksca_url: ${{ vars.BLACKDUCK_URL }}
         blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
         blackducksca_scan_full: true
+        blackducksca_scan_failure_severities: 'BLOCKER,CRITICAL'
+        mark_build_status: 'fail'
+
+    - name: Black Duck SCA PR Scan
+      id: black-duck-sca-pr-scan
+      if: github.event_name == 'pull_request'  # Only run this step on PR events
+      uses: blackduck-inc/black-duck-security-scan@v2
+      env:
+        DETECT_PROJECT_NAME: ${{ github.event.repository.name }}
+      with:
+        blackducksca_url: ${{ vars.BLACKDUCK_URL }}
+        blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
+        blackducksca_scan_full: false  # Set to false for PR comments
+        blackducksca_prcomment_enabled: 'true'  # Enable PR comments
         blackducksca_scan_failure_severities: 'BLOCKER,CRITICAL'
         mark_build_status: 'fail'
 
