@@ -6,19 +6,10 @@ on:
     branches: [main, master, develop, stage, release]
 jobs:
   build:
-    runs-on:[sh_mac_mdn]
-steps:
-    - name: Checkout Source
-      uses: actions/checkout@v4
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-
-    - name: Install Dependencies
-      run: npm install
-
+    runs-on: [sh_mac_mdn]
+  steps:
+  - name: Checkout Source
+    uses: actions/checkout@v4
   - name: Black Duck SCA Full Scan
     id: black-duck-full-scan
     if: ${{ github.event_name != 'pull_request' }}
@@ -31,13 +22,12 @@ steps:
       blackducksca_url: ${{ vars.BLACKDUCK_URL }}
       blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
       blackducksca_scan_full: true
-     
+
       ### Accepts Multiple Values
       blackducksca_scan_failure_severities: 'BLOCKER,CRITICAL'
-      
-      ### Mark build status if policy violating issues are found
       mark_build_status: 'failure'
       
+        
   - name: Black Duck SCA PR Scan
     id: black-duck-pr-scan
     if: ${{ github.event_name == 'pull_request' }}
@@ -53,14 +43,4 @@ steps:
       
       ### Below configuration is used to enable automatic pull request comment based on Black Duck SCA scan result
       blackducksca_prComment_enabled: true
-      github_token: ${{ secrets.BD_GITHUB_TOKEN }}
-   
-      ### Mark build status if policy violating issues are found
-      mark_build_status: 'failure'
-
-       ### Uncomment below configuration to add custom logic based on return status
-        - name: cmdLine
-        id: cmdLine
-         run: |
-         EXIT_CODE=${{ steps.black-duck-full-scan.outputs.status }}
-         echo "Black Duck Full Scan exit status - $EXIT_CODE"  
+      github_token: ${{ secrets.GITHUB_TOKEN }}
