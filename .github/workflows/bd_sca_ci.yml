@@ -1,6 +1,4 @@
-name: CI-BlackDuck-SCA-WorFlow # Name of the workflow
-
-
+name: BlackDuck-CI-SCA # Name of the workflow
 on:
   push:  # Trigger the workflow on push events
     branches: [main, master, develop, stage, release]  # Specify branches to trigger on push
