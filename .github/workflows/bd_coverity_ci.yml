@@ -27,6 +27,6 @@ jobs:
           coverity_prComment_enabled: true
           github_token: ${{ secrets.BD_GITHUB_TOKEN }}  # Black Duck API token from secrets
 
-         ### Mark build status if policy violating issues are found
-        mark_build_status: 'success'
+        ### Mark build status if policy violating issues are found
+          mark_build_status: 'success'
           
