@@ -1,4 +1,4 @@
-name: BlackDuck-CI-SCACoverity # Name of the workflow
+name: BlackDuck-CI-Coverity # Name of the workflow
 on:
   push:  # Trigger the workflow on push events
     branches: [main, master, develop, stage, release]  # Specify branches to trigger on push
@@ -7,14 +7,15 @@ on:
 
 jobs:
   build:  # Define a job named 'build'
-    #runs-on: [sh_mac_mdn]  # Specify the runner to execute the job
-    runs-on: [self-hosted, macOS, sh_mac_mdn]
+    runs-on: [sh_mac_mdn]  # Specify the runner to execute the job
     steps:  # List of steps to execute in this job
       - name: Checkout Source  # Step to check out the repository code
         uses: actions/checkout@v4 # Use the checkout action to clone the repo
       - name: Black Duck Coverity Scan  # Step for running a full CNC Scan
         uses: blackduck-inc/black-duck-security-scan@v2  # Use the Black Duck security scan action
         with:
+         ### SCANNING: Required fields
+          coverity_url: ${{ secrets.COVERITY_URL }}
           coverity_user: ${{ secrets.COVERITY_USER }}
           coverity_passphrase: ${{ secrets.COVERITY_PASSPHRASE }}
           coverity_project_name: "MDN_Coverity_Aug17"
