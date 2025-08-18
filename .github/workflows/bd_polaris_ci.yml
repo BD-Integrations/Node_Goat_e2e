@@ -21,7 +21,7 @@ jobs:
           polaris_assessment_types: "SCA,SAST"
 
            ### Uncomment below configuration if Bridge diagnostic files needs to be uploaded
-        include_diagnostics: true
+          include_diagnostics: true
 
         # polaris_waitForScan: false  # Used to support the async mode
 
