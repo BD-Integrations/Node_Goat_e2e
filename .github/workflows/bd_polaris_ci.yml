@@ -60,6 +60,7 @@ jobs:
         # coverity_args: --config-override capture.build.build-command=mvn install
       
       - name: Polaris PR Scan
+        if: ${{ github.event_name == 'pull_request' }}
         uses: blackduck-inc/black-duck-security-scan@v2
         with:
           polaris_server_url: ${{ secrets.POLARIS_SERVER_URL }}
