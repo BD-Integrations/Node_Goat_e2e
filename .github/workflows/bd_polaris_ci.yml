@@ -12,6 +12,7 @@ jobs:
       - name: Checkout Source  # Step to check out the repository code
         uses: actions/checkout@v4 # Use the checkout action to clone the repo
       - name: Polaris Full Scan  # Step for running a full CNC Scan
+        if: ${{ github.event_name != 'pull_request' }}
         uses: blackduck-inc/black-duck-security-scan@v2  # Use the Black Duck security scan action
         with:
           polaris_server_url: ${{ secrets.POLARIS_SERVER_URL }}
@@ -19,8 +20,8 @@ jobs:
           polaris_application_name: "Node_Goat_Repo_Test_Aug18"
           polaris_project_name: "Node_Goat_Repo_Test_Aug18"
           #polaris_assessment_types: "SCA,SAST"
-          polaris_assessment_types: "SCA"
-          #polaris_assessment_types: "SAST"
+          #polaris_assessment_types: "SCA"
+          polaris_assessment_types: "SAST"
 
            ### Uncomment below configuration if Bridge diagnostic files needs to be uploaded
           #include_diagnostics: true
