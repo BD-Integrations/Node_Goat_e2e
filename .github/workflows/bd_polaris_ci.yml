@@ -22,7 +22,6 @@ jobs:
 
           polaris_application_name: "Node_Goat_Repo_Test_Dir_Aug20"
           polaris_project_name: "Node_Goat_Repo_Test_Dir_Aug20"
-
           polaris_assessment_types: "SCA,SAST"
           #polaris_assessment_types: "SCA"
           #polaris_assessment_types: "SAST"
@@ -33,10 +32,10 @@ jobs:
 
         ### Uncomment below configuration for source code upload 
           polaris_assessment_mode: "SOURCE_UPLOAD"
-          project_directory: "/Users/madhavanr/GitHubTest_E2E/Repos/Node_Goat_e2e"
           #polaris_assessment_mode: "CI"
+          project_directory: "/Users/madhavanr/GitHubTest_E2E/Repos/Node_Goat_e2e"
+          project_source_excludes: "artifacts,config,test,*.md,*.yml" # Accepts Multiple Values
         # project_source_archive: ${{ vars.PROJECT_SOURCE_ARCHIVE }}
-        # project_source_excludes: ${{ vars.PROJECT_SOURCE_EXCLUDES }} # Accepts Multiple Values
         # project_source_preserveSymLinks: true
 
       
