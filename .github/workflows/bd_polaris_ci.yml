@@ -22,14 +22,18 @@ jobs:
           # polaris_application_name: "Node_Goat_Repo_Test_Dir_Aug20"
           # polaris_project_name: "Node_Goat_Repo_Test_Dir_Aug20"
           polaris_application_name: "Node_Goat_Repo_Test_Archive_Aug20"
-          polaris_project_name: "Node_Goat_Repo_Test_Archive_Aug20"
-          polaris_assessment_types: "SCA,SAST"
+          #polaris_project_name: "Node_Goat_Repo_Test_Archive_Aug20"
+          #polaris_assessment_types: "SCA,SAST"
           #polaris_assessment_types: "SCA"
           #polaris_assessment_types: "SAST"
            ### Uncomment below configuration if Bridge diagnostic files needs to be uploaded
           include_diagnostics: true
 
+         ### Signature scan
+          polaris_test_sca_type: "SCA-SIGNATURE"
+         
         # polaris_waitForScan: false  # Used to support the async mode
+
 
         ### Uncomment below configuration for source code upload 
           polaris_assessment_mode: "SOURCE_UPLOAD"
@@ -52,9 +56,6 @@ jobs:
                 ### Mark build status if policy violating issues are found
           mark_build_status: 'success'
 
-
-         ### Signature scan
-        # polaris_test_sca_type: "SCA-SIGNATURE"
 
                 ### Uncomment below to add arbitrary CL parameters
         # detect_search_depth: 2
