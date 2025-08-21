@@ -31,17 +31,16 @@ jobs:
 
          ### Signature scan
           polaris_test_sca_type: "SCA-SIGNATURE"
-         
         # polaris_waitForScan: false  # Used to support the async mode
 
 
         ### Uncomment below configuration for source code upload 
-          polaris_assessment_mode: "SOURCE_UPLOAD"
-          #polaris_assessment_mode: "CI"
+          #polaris_assessment_mode: "SOURCE_UPLOAD"
+          polaris_assessment_mode: "CI"
           #project_directory: "/Users/madhavanr/GitHubTest_E2E/Repos/Node_Goat_e2e"
           #project_source_excludes: "artifacts,config,test,*.md,*.yml" # Accepts Multiple Values
-          project_source_archive: "/Users/madhavanr/GitHubTest_E2E/Repos/Node_Goat_e2e.zip"
-         # project_source_preserveSymLinks: true
+          #project_source_archive: "/Users/madhavanr/GitHubTest_E2E/Repos/Node_Goat_e2e.zip"
+          # project_source_preserveSymLinks: true
 
       
         ### SARIF report generation and upload to GitHub Adavanced Security Tab: Uncomment below to enable
