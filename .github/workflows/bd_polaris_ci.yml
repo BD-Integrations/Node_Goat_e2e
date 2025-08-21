@@ -17,8 +17,8 @@ jobs:
         with:
           polaris_server_url: ${{ secrets.POLARIS_SERVER_URL }}
           polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
-          polaris_application_name: "Node_Goat_Repo_Test_Aug21"
-          polaris_project_name: "Node_Goat_Repo_Test_Aug21"
+          polaris_application_name: "Node_Goat_Repo_01_Test_Aug21"
+          polaris_project_name: "Node_Goat_Repo_01_Test_Aug21"
           # polaris_application_name: "Node_Goat_Repo_Test_Dir_Aug20"
           # polaris_project_name: "Node_Goat_Repo_Test_Dir_Aug20"
           #polaris_application_name: "Node_Goat_Repo_Test_Archive_Aug20"
@@ -52,6 +52,9 @@ jobs:
         # polaris_upload_sarif_report: true 
         # github_token: ${{ secrets.GITHUB_TOKEN }} # Required when polaris_upload_sarif_report is set as true
 
+ ### Below configuration is used to enable feedback from Polaris security testing as pull request comment
+          polaris_prComment_enabled: true
+          github_token: ${{ secrets.BD_GITHUB_TOKEN }}
                 ### Mark build status if policy violating issues are found
           mark_build_status: 'success'
 
@@ -65,30 +68,30 @@ jobs:
         # coverity_config_path: /Users/Config/coverity.yml
         # coverity_args: --config-override capture.build.build-command=mvn install
       
-      - name: Polaris PR Scan
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: blackduck-inc/black-duck-security-scan@v2
-        with:
-          polaris_server_url: ${{ secrets.POLARIS_SERVER_URL }}
-          polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
-          polaris_application_name: "Node_Goat_Repo_Test_Aug18"
-          polaris_project_name: "Node_Goat_Repo_Test_Aug18"
-          polaris_assessment_types: "SCA,SAST"
-        # project_directory: ${{ vars.PROJECT_DIRECTORY }}
+      # - name: Polaris PR Scan
+      #   if: ${{ github.event_name == 'pull_request' }}
+      #   uses: blackduck-inc/black-duck-security-scan@v2
+      #   with:
+      #     polaris_server_url: ${{ secrets.POLARIS_SERVER_URL }}
+      #     polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
+      #     polaris_application_name: "Node_Goat_Repo_Test_Aug18"
+      #     polaris_project_name: "Node_Goat_Repo_Test_Aug18"
+      #     polaris_assessment_types: "SCA,SAST"
+      #   # project_directory: ${{ vars.PROJECT_DIRECTORY }}
 
-             ### Uncomment below configuration for source code upload 
-        # polaris_assessment_mode: "SOURCE_UPLOAD"
-        # project_source_archive: ${{ vars.PROJECT_SOURCE_ARCHIVE }}
-        # project_source_excludes: ${{ vars.PROJECT_SOURCE_EXCLUDES }} # Accepts Multiple Values
-        # project_source_preserveSymLinks: true
+      #        ### Uncomment below configuration for source code upload 
+      #   # polaris_assessment_mode: "SOURCE_UPLOAD"
+      #   # project_source_archive: ${{ vars.PROJECT_SOURCE_ARCHIVE }}
+      #   # project_source_excludes: ${{ vars.PROJECT_SOURCE_EXCLUDES }} # Accepts Multiple Values
+      #   # project_source_preserveSymLinks: true
 
-                ### Below configuration is used to enable feedback from Polaris security testing as pull request comment
-          polaris_prComment_enabled: true
-          github_token: ${{ secrets.BD_GITHUB_TOKEN }}
-        # Mandatory when polaris_prComment_enabled is set to 'true'
+      #           ### Below configuration is used to enable feedback from Polaris security testing as pull request comment
+      #     polaris_prComment_enabled: true
+      #     github_token: ${{ secrets.BD_GITHUB_TOKEN }}
+      #   # Mandatory when polaris_prComment_enabled is set to 'true'
 
-                ### Mark build status if policy violating issues are found
-        # mark_build_status: 'success'
+      #           ### Mark build status if policy violating issues are found
+      #   # mark_build_status: 'success'
 
-                ### Uncomment below configuration if Bridge diagnostic files needs to be uploaded
-        # include_diagnostics: true
+      #           ### Uncomment below configuration if Bridge diagnostic files needs to be uploaded
+      #   # include_diagnostics: true
