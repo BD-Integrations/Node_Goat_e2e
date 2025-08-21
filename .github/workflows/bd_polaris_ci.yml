@@ -30,7 +30,7 @@ jobs:
           include_diagnostics: true
 
          ### Signature scan
-          polaris_test_sca_type: "SCA-SIGNATURE"
+          #polaris_test_sca_type: "SCA-SIGNATURE"
          
         # polaris_waitForScan: false  # Used to support the async mode
 
