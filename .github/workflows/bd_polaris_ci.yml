@@ -17,8 +17,8 @@ jobs:
         with:
           polaris_server_url: ${{ secrets.POLARIS_SERVER_URL }}
           polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
-          polaris_application_name: "Node_Goat_Repo_01_Test_Aug21"
-          polaris_project_name: "Node_Goat_Repo_01_Test_Aug21"
+          polaris_application_name: "Node_Goat_Repo_02_Test_Aug21"
+          polaris_project_name: "Node_Goat_Repo_02_Test_Aug21"
           # polaris_application_name: "Node_Goat_Repo_Test_Dir_Aug20"
           # polaris_project_name: "Node_Goat_Repo_Test_Dir_Aug20"
           #polaris_application_name: "Node_Goat_Repo_Test_Archive_Aug20"
@@ -31,8 +31,10 @@ jobs:
 
          ### Signature scan
           #polaris_test_sca_type: "SCA-SIGNATURE"
-        # polaris_waitForScan: false  # Used to support the async mode
-
+          #polaris_test_sca_type: "SCA-PACKAGE"
+         
+         #async mode
+         # polaris_waitForScan: false  # Used to support the async mode
 
         ### Uncomment below configuration for source code upload 
           #polaris_assessment_mode: "SOURCE_UPLOAD"
@@ -44,11 +46,11 @@ jobs:
 
       
         ### SARIF report generation and upload to GitHub Adavanced Security Tab: Uncomment below to enable
-        # polaris_reports_sarif_create: true  
-        # polaris_reports_sarif_file_path: '/Users/tmp/report.sarif.json' # File path (including file name) where SARIF report is created.
+          polaris_reports_sarif_create: true  
+          polaris_reports_sarif_groupSCAIssues: true
+          polaris_reports_sarif_issue_types: 'SCA, SAST'
+          polaris_reports_sarif_file_path: '/Users/madhavanr/GitHubTest_E2E/sarif_Path/Polris_Sarif_Reports.json' # File path (including file name) where SARIF report is created.
         # polaris_reports_sarif_severities: "CRITICAL,HIGH"
-        # polaris_reports_sarif_groupSCAIssues: true 
-        # polaris_reports_sarif_issue_types: 'SCA, SAST' 
         # polaris_upload_sarif_report: true 
         # github_token: ${{ secrets.GITHUB_TOKEN }} # Required when polaris_upload_sarif_report is set as true
 
@@ -56,42 +58,11 @@ jobs:
           polaris_prComment_enabled: true
           github_token: ${{ secrets.BD_GITHUB_TOKEN }}
                 ### Mark build status if policy violating issues are found
-          mark_build_status: 'success'
 
+        # Rapid Scans
+        polaris_test_sast_Type: 'SAST_RAPID'   
+        polaris_test_sast_Type: 'SAST_FULL'      
+       
+        mark_build_status: 'success'
 
-                ### Uncomment below to add arbitrary CL parameters
-        # detect_search_depth: 2
-        # detect_args: '--detect.diagnostic=true'
-        # detect_config_path: '/Users/Config/application.properties'
-        # coverity_build_command: mvn clean install
-        # coverity_clean_command: mvn clean
-        # coverity_config_path: /Users/Config/coverity.yml
-        # coverity_args: --config-override capture.build.build-command=mvn install
-      
-      # - name: Polaris PR Scan
-      #   if: ${{ github.event_name == 'pull_request' }}
-      #   uses: blackduck-inc/black-duck-security-scan@v2
-      #   with:
-      #     polaris_server_url: ${{ secrets.POLARIS_SERVER_URL }}
-      #     polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
-      #     polaris_application_name: "Node_Goat_Repo_Test_Aug18"
-      #     polaris_project_name: "Node_Goat_Repo_Test_Aug18"
-      #     polaris_assessment_types: "SCA,SAST"
-      #   # project_directory: ${{ vars.PROJECT_DIRECTORY }}
-
-      #        ### Uncomment below configuration for source code upload 
-      #   # polaris_assessment_mode: "SOURCE_UPLOAD"
-      #   # project_source_archive: ${{ vars.PROJECT_SOURCE_ARCHIVE }}
-      #   # project_source_excludes: ${{ vars.PROJECT_SOURCE_EXCLUDES }} # Accepts Multiple Values
-      #   # project_source_preserveSymLinks: true
-
-      #           ### Below configuration is used to enable feedback from Polaris security testing as pull request comment
-      #     polaris_prComment_enabled: true
-      #     github_token: ${{ secrets.BD_GITHUB_TOKEN }}
-      #   # Mandatory when polaris_prComment_enabled is set to 'true'
-
-      #           ### Mark build status if policy violating issues are found
-      #   # mark_build_status: 'success'
-
-      #           ### Uncomment below configuration if Bridge diagnostic files needs to be uploaded
-      #   # include_diagnostics: true
+              
