@@ -32,7 +32,6 @@ jobs:
           #polaris_test_sca_type: "SCA-SIGNATURE"
           #polaris_test_sca_type: "SCA-PACKAGE"
 
-          
          #async mode
          # polaris_waitForScan: false  # Used to support the async mode
 
