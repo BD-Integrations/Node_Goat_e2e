@@ -16,8 +16,8 @@ jobs:
         with:
           polaris_server_url: ${{ secrets.POLARIS_SERVER_URL }}
           polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
-          polaris_application_name: "Node_Goat_Repo_03_Test_Aug21"
-          polaris_project_name: "Node_Goat_Repo_03_Test_Aug21"
+          polaris_application_name: "Node_Goat_Repo_03_Test_Aug22"
+          polaris_project_name: "Node_Goat_Repo_03_Test_Aug22"
           # polaris_application_name: "Node_Goat_Repo_Test_Dir_Aug20"
           # polaris_project_name: "Node_Goat_Repo_Test_Dir_Aug20"
           #polaris_application_name: "Node_Goat_Repo_Test_Archive_Aug20"
@@ -59,7 +59,7 @@ jobs:
                 ### Mark build status if policy violating issues are found
 
         # Rapid Scans
-          #polaris_test_sast_Type: 'SAST_RAPID'   
+          polaris_test_sast_Type: 'SAST_RAPID'   
           #polaris_test_sast_Type: 'SAST_FULL'      
           mark_build_status: 'success'
 
