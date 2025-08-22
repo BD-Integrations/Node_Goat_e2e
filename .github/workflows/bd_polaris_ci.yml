@@ -8,8 +8,8 @@ on:
 jobs:
   build:  # Define a job named 'build'
     #runs-on: [sh_mac_mdn]  # Self Hosted Runner mac
-    #runs-on: [ubuntu-latest]
-    runs-on: [windows-latest]
+    runs-on: [ubuntu-latest]
+    #runs-on: [windows-latest]
 
 
     steps:  # List of steps to execute in this job
