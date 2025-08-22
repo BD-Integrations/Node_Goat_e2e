@@ -7,7 +7,11 @@ on:
   workflow_dispatch:
 jobs:
   build:  # Define a job named 'build'
-    runs-on: [sh_mac_mdn]  # Specify the runner to execute the job
+    #runs-on: [sh_mac_mdn]  # Self Hosted Runner mac
+    runs-on: [ubuntu-latest]
+    #runs-on: [windows-latest]
+
+
     steps:  # List of steps to execute in this job
       - name: Checkout Source  # Step to check out the repository code
         uses: actions/checkout@v4 # Use the checkout action to clone the repo
@@ -16,8 +20,8 @@ jobs:
         with:
           polaris_server_url: ${{ secrets.POLARIS_SERVER_URL }}
           polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
-          polaris_application_name: "Node_Goat_Repo_03_Test_Aug22"
-          polaris_project_name: "Node_Goat_Repo_03_Test_Aug22"
+          polaris_application_name: "Node_Goat_Repo_03_Test_Aug22_Ubuntu"
+          polaris_project_name: "Node_Goat_Repo_03_Test_Aug22_Ubuntu"
           # polaris_application_name: "Node_Goat_Repo_Test_Dir_Aug20"
           # polaris_project_name: "Node_Goat_Repo_Test_Dir_Aug20"
           #polaris_application_name: "Node_Goat_Repo_Test_Archive_Aug20"
