@@ -38,8 +38,7 @@ jobs:
           github_token: ${{ secrets.BD_GITHUB_TOKEN }}  # Black Duck API token from secrets
            
            ### Uncomment below configuration if Bridge diagnostic files needs to be uploaded
-          include_diagnostics: true
-
-         ### Mark build status if policy violating issues are found
+          #include_diagnostics: true
+         #s Mark build status if policy violating issues are found
           mark_build_status: 'success'
           
