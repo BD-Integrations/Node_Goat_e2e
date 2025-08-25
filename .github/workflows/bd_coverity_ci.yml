@@ -39,6 +39,6 @@ jobs:
            
            ### Uncomment below configuration if Bridge diagnostic files needs to be uploaded
           include_diagnostics: true
-         #s Mark build status if policy violating issues are found
+         # Mark build status if policy violating issues are found
           mark_build_status: 'success'
-          
+      
